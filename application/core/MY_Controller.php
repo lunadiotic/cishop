@@ -13,6 +13,17 @@ class MY_Controller extends CI_Controller
 			$this->load->model($model . '_model', $model, true);			
 		}
 	}
+
+	/**
+	 * Load view with default layouts
+	 *
+	 * @param Array $data
+	 * @return void
+	 */
+	public function view($data)
+	{
+		$this->load->view('app', $data);
+	}
 	
 }
 
