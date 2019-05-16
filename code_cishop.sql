@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 15 Bulan Mei 2019 pada 14.55
+-- Waktu pembuatan: 16 Bulan Mei 2019 pada 14.18
 -- Versi server: 5.7.24
 -- Versi PHP: 7.2.14
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `id_user` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
   `qty` smallint(6) NOT NULL,
-  `price` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -66,7 +66,25 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `invoice` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(17) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('waiting','delivered','cancel','') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('waiting','paid','delivered','cancel') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `orders_confirm`
+--
+
+DROP TABLE IF EXISTS `orders_confirm`;
+CREATE TABLE IF NOT EXISTS `orders_confirm` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_order` int(11) NOT NULL,
+  `account_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -82,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `orders_detail` (
   `id_orders` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
   `qty` smallint(6) NOT NULL,
-  `price` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -100,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
+  `is_available` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -117,10 +136,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` enum('admin','member') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `role`, `photo`, `is_active`) VALUES
+(1, 'Admin', 'admin@mail.com', '$2y$10$LZNLMTNxdCqq4RIQcfKfSum4zW/8qwBiePWQbCxJsoHU3s7g1qDWu', 'admin', NULL, 1),
+(2, 'Member', 'member@mail.com', '$2y$10$HYEHnjBhoHXB7gQcNxfIZ.gmqxqSWCAIFxpZ6bdH3vw8YBm4x9SRO', 'member', NULL, 1);
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
