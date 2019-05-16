@@ -32,8 +32,19 @@
 								<td><?= $row->slug ?></td>
 								<td><?= $row->title ?></td>
 								<td>
-									<a href="<?= base_url("category/edit/{$row->id}") ?>" class="action-icon"><i class="fas fa-edit text-info"></i></a>
-									<a href="javascript:void(0);" class="action-icon"><i class="fas fa-trash text-danger"></i></a>
+									<?= form_open("category/delete/{$row->id}", ['method' => 'POST']) ?>
+										<?= form_hidden('id', $row->id) ?>
+										<a href="<?= base_url("category/edit/{$row->id}") ?>">
+											<button class="btn btn-sm action-icon" type="button"><i class="fas fa-edit text-info"></i></button>
+										</a>
+										<button 
+											class="btn btn-sm action-icon" 
+											type="submit" 
+											onclick="return confirm('Are you sure you want to delete this item?');"
+										>
+											<i class="fas fa-trash text-danger"></i>
+										</button>
+									<?= form_close() ?>
 								</td>
 							</tr>
 							<?php endforeach ?>

@@ -80,6 +80,28 @@ class Category extends MY_Controller
 		redirect('category');
 	}
 
+	public function delete($id = null)
+	{
+		if (!$_POST) {
+			redirect('category');
+		}
+
+		$content = $this->category->where('id', $id)->first();
+
+		if (!$content) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect('category');
+		}
+
+		if ($this->category->where('id', $id)->delete()) {
+			$this->session->set_flashdata('success', 'Data sudah berhasil dihapus!');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect('category');
+	}
+
 	public function unique_slug()
 	{
 		$slug			= $this->input->post('slug');
