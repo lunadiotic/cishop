@@ -32,7 +32,7 @@
 								<td><?= $row->slug ?></td>
 								<td><?= $row->title ?></td>
 								<td>
-									<a href="javascript:void(0);" class="action-icon"><i class="fas fa-edit text-info"></i></a>
+									<a href="<?= base_url("category/edit/{$row->id}") ?>" class="action-icon"><i class="fas fa-edit text-info"></i></a>
 									<a href="javascript:void(0);" class="action-icon"><i class="fas fa-trash text-danger"></i></a>
 								</td>
 							</tr>
