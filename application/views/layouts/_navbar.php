@@ -27,7 +27,7 @@
 				</li>
 				<?php if (!$this->session->userdata('is_login')): ?>
 					<li class="nav-item">
-						<a class="nav-link" href="/login.html">Masuk</a>
+						<a class="nav-link" href="<?= base_url('/login') ?>">Masuk</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url('/register') ?>">Daftar</a>
@@ -38,7 +38,7 @@
 						<div class="dropdown-menu" aria-labelledby="dropdown-1">
 							<a class="dropdown-item" href="/profile.html">Profil</a>
 							<a class="dropdown-item" href="/orders.html">Order</a>
-							<a class="dropdown-item" href="#">Keluar</a>
+							<a class="dropdown-item" href="<?= base_url('logout') ?>">Keluar</a>
 						</div>
 					</li>
 				<?php endif ?>
