@@ -25,6 +25,8 @@
     <!-- JQuery -->
     <script src="<?= base_url('/assets/libs/jquery/jquery.min.js') ?>"></script>
     <!-- Bootstrap -->
-    <script src="<?= base_url('/assets/libs/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+	<script src="<?= base_url('/assets/libs/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+	<!-- Custom Script for This Template -->
+	<script src="<?= base_url('/assets/js/app.js') ?>"></script>
 </body>
 </html>
