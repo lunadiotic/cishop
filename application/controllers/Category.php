@@ -8,7 +8,11 @@ class Category extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		//Do your magic here
+		$role		= $this->session->userdata('role');
+		if ($role != 'admin') {
+			redirect(base_url());
+			return;
+		}
 	}
 	
 
@@ -20,6 +24,29 @@ class Category extends MY_Controller
 		$data['pagination']	= $this->category->makePagination(site_url('category'), 2, $data['total_rows']);
 		$data['page']		= 'pages/category/index';
 		$this->view($data);
+	}
+
+	public function search($page = null)
+	{
+		if (isset($_POST['keyword'])) {
+			$this->session->set_userdata('keyword', $this->input->post('keyword'));
+		} else {
+			redirect(base_url('category'));
+		}
+		$keyword 			= $this->session->userdata('keyword'); 
+		$data['content']	= $this->category->like('title', $keyword)
+							  ->paginate($page)
+							  ->get();
+		$data['total_rows']	= $this->category->like('title', $keyword)->count();
+		$data['pagination']	= $this->category->makePagination(site_url('category/search'), 3, $data['total_rows']);
+		$data['page']		= 'pages/category/index';
+		$this->view($data);
+	}
+
+	public function reset()
+	{
+		$this->session->unset_userdata('keyword');
+		redirect(base_url('category'));
 	}
 
 	public function create()

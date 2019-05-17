@@ -7,12 +7,15 @@
 					<span>Kategori</span>
 					<a href="<?= base_url('/category/create') ?>" class="btn btn-sm btn-secondary">Tambah</a> 
 					<div class="float-right">
+						<?= form_open('category/search', ['method' => 'POST']) ?>
 						<div class="input-group">
-							<input type="text" class="form-control form-control-sm text-center" placeholder="Cari">
+							<?= form_input('keyword', $this->session->userdata('keyword'), ['placeholder' => 'Search', 'class' => 'form-control form-control-sm text-center']) ?>
 							<div class="input-group-append">
 								<button class="btn btn-info btn-sm" type="submit"><i class="fas fa-search"></i></button>
+								<a href="<?= base_url('category/reset') ?>" class="btn btn-info btn-sm"><i class="fas fa-eraser"></i></a>
 							</div>
 						</div>
+						<?= form_close() ?>
 					</div>
 				</div>
 				<div class="card-body">
