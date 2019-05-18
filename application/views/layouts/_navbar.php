@@ -15,7 +15,7 @@
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown-1">
 						<a class="dropdown-item" href="<?= base_url('/category') ?>">Kategori</a>
-						<a class="dropdown-item" href="/admin-product.html">Produk</a>
+						<a class="dropdown-item" href="<?= base_url('/product') ?>">Produk</a>
 						<a class="dropdown-item" href="/admin-order.html">Orders</a>
 					</div>
 				</li>
