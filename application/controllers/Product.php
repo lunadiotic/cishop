@@ -102,8 +102,6 @@ class Product extends MY_Controller
 			$data['input']	= (object) $this->input->post(null, true);
 		}
 
-		var_dump($data['input']);
-
 		if (!empty($_FILES) && $_FILES['image']['name'] !== '') {
 			$imageName	= url_title($data['input']->title, '-', true).'-'.date('YmdHis');
 			$upload		= $this->product->uploadImage('image', $imageName);
@@ -127,6 +125,29 @@ class Product extends MY_Controller
 
 		if ($this->product->where('id', $id)->update($data['input'])) {
 			$this->session->set_flashdata('success', 'Data berhasil diperbaharui');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect('product');
+	}
+
+	public function delete($id = null)
+	{
+		if (!$_POST) {
+			redirect('product');
+		}
+
+		$content = $this->product->where('id', $id)->first();
+
+		if (!$content) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect('category');
+		}
+
+		if ($this->product->where('id', $id)->delete()) {
+			$this->product->deleteImage($content->image);
+			$this->session->set_flashdata('success', 'Data sudah berhasil dihapus!');
 		} else {
 			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
 		}
