@@ -87,19 +87,52 @@ class Product extends MY_Controller
 		redirect('product');
 	}
 
-	// public function image_upload()
-	// {
-	// 	if (empty($_FILES['image']['name'])){
-	// 		$this->session->set_flashdata('image_error', 'Silakan upload gambar product');
-	// 		redirect('product/create');
-	// 	} 
-			
-	// 	$allowed_type = ['image/jpeg', 'image/png'];
-	// 	if (!in_array($_FILES['image']['type'], $allowed_type)) {
-	// 		$this->session->set_flashdata('image_error', 'Upload file berjenis .jpg/.png');
-	// 		redirect('product/create');
-	// 	}
-    // }
+	public function edit($id = null)
+	{
+		$data['content'] = $this->product->where('id', $id)->first();
+
+		if (!$data['content']) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect('product');
+		}
+
+		if (!$_POST) {
+			$data['input']	= (object) $data['content'];
+		} else {
+			$data['input']	= (object) $this->input->post(null, true);
+		}
+
+		var_dump($data['input']);
+
+		if (!empty($_FILES) && $_FILES['image']['name'] !== '') {
+			$imageName	= url_title($data['input']->title, '-', true).'-'.date('YmdHis');
+			$upload		= $this->product->uploadImage('image', $imageName);
+			if ($upload) {
+				if ($data['content']->image !== '') {
+					$this->product->deleteImage($data['content']->image);
+				}
+				$data['input']->image = $upload['file_name'];
+			} else {
+				redirect('product/create');
+			}
+		}
+
+		if (!$this->product->validate()) {
+			$data['title']			= 'Edit Product';
+			$data['form_action']	= "product/edit/{$id}";
+			$data['page']			= 'pages/product/form';
+			$this->view($data);
+			return;
+		}
+
+		if ($this->product->where('id', $id)->update($data['input'])) {
+			$this->session->set_flashdata('success', 'Data berhasil diperbaharui');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect('product');
+	}
 
 }
 

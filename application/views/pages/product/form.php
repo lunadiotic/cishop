@@ -40,13 +40,13 @@
 						</div>
 						<div class="form-group">
 							<label for="">Stok Tersedia ?</label> <br>
-							<?= form_radio(['name' => 'is_available', 'value' => true, 'checked' => true]) ?> <label for="">Iya</label>
-							<?= form_radio(['name' => 'is_available', 'value' => false]) ?> <label for="">Tidak</label>
+							<?= form_radio(['name' => 'is_available', 'value' => 1, 'checked' => true]) ?> <label for="">Iya</label>
+							<?= form_radio(['name' => 'is_available', 'value' => 0]) ?> <label for="">Tidak</label>
 							<?= form_error('is_available') ?>
 						</div>
 						<div class="form-group">
 							<label for="">Slug</label>
-							<?= form_input('slug', $input->title, ['class' => 'form-control', 'id' => 'slug']) ?>
+							<?= form_input('slug', $input->slug, ['class' => 'form-control', 'id' => 'slug']) ?>
 							<?= form_error('slug') ?>
 						</div>
 						<button type="submit" class="btn btn-primary">Submit</button>

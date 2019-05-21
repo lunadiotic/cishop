@@ -15,7 +15,7 @@
 						</div>
 						<div class="form-group">
 							<label for="">Slug</label>
-							<?= form_input('slug', $input->title, ['class' => 'form-control', 'id' => 'slug']) ?>
+							<?= form_input('slug', $input->slug, ['class' => 'form-control', 'id' => 'slug']) ?>
 							<?= form_error('slug') ?>
 						</div>
 						<button type="submit" class="btn btn-primary">Submit</button>

@@ -87,6 +87,19 @@ class Product_model extends MY_Model
 		}
 	}
 
+	/**
+	 * Delete Old Image
+	 *
+	 * @param String $fileName
+	 * @return void
+	 */
+	public function deleteImage($fileName)
+	{
+		if (file_exists("./images/product/$fileName")) {
+			unlink("./images/product/$fileName");
+		}
+	}
+
 }
 
 /* End of file Product_model.php */
