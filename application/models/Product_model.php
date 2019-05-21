@@ -46,8 +46,9 @@ class Product_model extends MY_Model
 			[
 				'field' => 'price',
 				'label'	=> 'Harga',
-				'rules' => 'trim|required|decimal',
-			],[
+				'rules' => 'trim|required|numeric',
+			],
+			[
 				'field' => 'is_available',
 				'label'	=> 'Tersedia',
 				'rules' => 'trim|required',
@@ -55,6 +56,35 @@ class Product_model extends MY_Model
 		];
 
 		return $validationRules;
+	}
+
+	/**
+	 * Upload Image Product
+	 *
+	 * @param String $fieldName
+	 * @param String $fileName
+	 * @return void
+	 */
+	public function uploadImage($fieldName, $fileName)
+	{
+		$config = [
+			'upload_path'	=> './images/product',
+			'file_name'		=> $fileName,
+			'allowed_types' => 'jpg|gif|png|jpeg|JPG|PNG',
+			'max_size'		=> 1024, //1mb
+			'max_width'		=> 0,
+			'max_height'	=> 0,
+			'overwrite'		=> true,
+			'file_ext_tolower' => true
+		];
+
+		$this->load->library('upload', $config);
+		if ($this->upload->do_upload($fieldName)) {
+			return $this->upload->data();
+		} else {
+			$this->session->set_flashdata('image_error', $this->upload->display_errors('', ''));
+			return false;
+		}
 	}
 
 }

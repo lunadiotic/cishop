@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 16 Bulan Mei 2019 pada 14.18
+-- Waktu pembuatan: 21 Bulan Mei 2019 pada 09.40
 -- Versi server: 5.7.24
 -- Versi PHP: 7.2.14
 
@@ -51,7 +51,18 @@ CREATE TABLE IF NOT EXISTS `category` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `category`
+--
+
+INSERT INTO `category` (`id`, `slug`, `title`) VALUES
+(1, 'Power Banks', 'Power Banks'),
+(2, 'smartphones', 'Smartphones'),
+(3, 'laptops', 'Laptops'),
+(4, 'game-consoles', 'Game Consoles'),
+(5, 'smartwatches', 'Smartwatches');
 
 -- --------------------------------------------------------
 
@@ -118,10 +129,20 @@ CREATE TABLE IF NOT EXISTS `product` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_available` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `product`
+--
+
+INSERT INTO `product` (`id`, `id_category`, `slug`, `title`, `description`, `price`, `image`, `is_available`) VALUES
+(1, 1, 'power-banks-blue', 'Power Banks Blue', 'Nikmati daya charge sampai dengan 120000mAh', 200000, 'power-banks-blue-20190521163312.jpg', 1),
+(2, 2, 'iphone-6', 'iPhone 6', 'Smartphone untuk lebih gaya', 7000000, 'iphone-6-20190521163353.jpg', 1),
+(3, 3, 'laptop', 'Laptop', 'Laptop dengan spek tinggi', 5000000, 'laptop-20190521164038.jpg', 1);
 
 -- --------------------------------------------------------
 

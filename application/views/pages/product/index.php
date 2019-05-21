@@ -25,6 +25,8 @@
 								<th scope="col">#</th>
 								<th scope="col">Product</th>
 								<th scope="col">Kategori</th>
+								<th scope="col">Harga</th>
+								<th scope="col">Stok</th>
 								<th scope="col"></th>
 							</tr>
 						</thead>
@@ -34,11 +36,17 @@
 								<th scope="row"><?= $no ?></th>
 								<td>
 									<p>
-										<img src="<?= base_url($row->image) ?>" alt="" height="50">
+										<?php if ($row->image != ''): ?>
+										<img src="<?= base_url("/images/product/$row->image") ?>" alt="" height="50">
+										<?php else : ?>
+										<img src="<?= base_url("/images/product/default.png") ?>" alt="" height="50">
+										<?php endif ?>
 										<?= $row->title ?>
 									</p> 
 								</td>
 								<td><span class="badge badge-primary"><i class="fas fa-tags"></i> <?= $row->category_title ?></span></td>
+								<td>Rp<?= number_format($row->price, 0, ',', '.') ?>,-</td>
+								<td><?=  $row->is_available ? 'Ya' : 'Tidak' ?></td>
 								<td>
 									<?= form_open("product/delete/{$row->id}", ['method' => 'POST']) ?>
 										<?= form_hidden('id', $row->id) ?>
