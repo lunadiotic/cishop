@@ -15,7 +15,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-9">                
+		<div class="col-md-9">
+			<?php $this->load->view('layouts/_alert'); ?>                
 			<div class="row">
 				<div class="col-md-4">
 					<div class="card">
@@ -29,7 +30,7 @@
 						<div class="card-body">
 							<p>Nama: <?= $user->name ?></p>
 							<p>Email: <?= $user->email ?></p>
-							<a href="/profile-update.html" class="btn btn-primary">Edit</a>
+							<a href='<?= base_url("/profile/update/{$user->id}") ?>' class="btn btn-primary">Edit</a>
 						</div>
 					</div>
 				</div>
