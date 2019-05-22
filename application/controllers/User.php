@@ -48,6 +48,44 @@ class User extends MY_Controller
 		$this->session->unset_userdata('keyword');
 		redirect(base_url('user'));
 	}
+
+	public function create()
+	{
+		if (!$_POST) {
+			$input = (object) $this->user->getDefaultValues();
+		} else {
+			$input = (object) $this->input->post(null, true);
+			$this->load->library('form_validation');			
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+		}
+
+		if (!empty($_FILES) && $_FILES['photo']['name'] !== '') {
+			$imageName	= url_title($input->name, '-', true).'-'.date('YmdHis');
+			$upload		= $this->user->uploadImage('photo', $imageName);
+			if ($upload) {
+				$input->photo = $upload['file_name'];
+			} else {
+				redirect('user/create');
+			}
+		}
+
+		if (!$this->user->validate()) {
+			$data['title']			= 'Tambah Pengguna';
+			$data['input']			= $input;
+			$data['form_action']	= '/user/create';
+			$data['page']			= 'pages/user/form';
+			$this->view($data);
+			return;
+		}
+
+		if ($this->user->create($input)) {
+			$this->session->set_flashdata('success', 'Data sudah berhasil disimpan!');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect('user');
+	}
 }
 
 /* End of file User.php */
