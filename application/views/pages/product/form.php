@@ -30,7 +30,7 @@
 								<small class="form-text text-danger"><?= $this->session->flashdata('image_error') ?></small>
 							<?php endif ?>
 							<?php if (!empty($input->image)): ?>
-								<img src="<?= site_url("/images/$input->image") ?>" alt="">
+								<img src="<?= site_url("/images/product/$input->image") ?>" alt="">
 							<?php endif ?>
 						</div>
 						<div class="form-group">
@@ -40,8 +40,8 @@
 						</div>
 						<div class="form-group">
 							<label for="">Stok Tersedia ?</label> <br>
-							<?= form_radio(['name' => 'is_available', 'value' => 1, 'checked' => true]) ?> <label for="">Iya</label>
-							<?= form_radio(['name' => 'is_available', 'value' => 0]) ?> <label for="">Tidak</label>
+							<?= form_radio(['name' => 'is_available', 'value' => 1, 'checked' => $input->is_available == 1 ? true : false]) ?> <label for="">Iya</label>
+							<?= form_radio(['name' => 'is_available', 'value' => 0, 'checked' => $input->is_available == 0 ? true : false]) ?> <label for="">Tidak</label>
 							<?= form_error('is_available') ?>
 						</div>
 						<div class="form-group">
