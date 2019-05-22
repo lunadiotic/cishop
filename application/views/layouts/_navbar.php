@@ -17,6 +17,7 @@
 						<a class="dropdown-item" href="<?= base_url('/category') ?>">Kategori</a>
 						<a class="dropdown-item" href="<?= base_url('/product') ?>">Produk</a>
 						<a class="dropdown-item" href="/admin-order.html">Orders</a>
+						<a class="dropdown-item" href="<?= base_url('/user') ?>">Pengguna</a>
 					</div>
 				</li>
 				<?php endif ?>

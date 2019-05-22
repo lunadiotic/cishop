@@ -155,6 +155,24 @@ class Product extends MY_Controller
 		redirect('product');
 	}
 
+	public function unique_slug()
+	{
+		$slug	= $this->input->post('slug');
+		$id		= $this->input->post('id');
+
+		$product		= $this->product->where('slug', $slug)->first();
+
+		if ($product) {
+			if ($id == $product->id) {
+				return true;
+			}
+			$this->form_validation->set_message('unique_slug', '%s already exists!');
+			return false;
+		}
+
+		return true;
+	}
+
 }
 
 /* End of file Product.php */
