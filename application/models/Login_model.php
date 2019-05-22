@@ -39,7 +39,7 @@ class Login_model extends MY_Model
 						 ->get($this->table)
 						 ->row();
 
-		if (!empty($user) && $this->hashVerify($input->password, $user->password)) {
+		if (!empty($user) && hashEncryptVerify($input->password, $user->password)) {
 			$data = [
 				'name'		=> $user->name,
 				'email'		=> $user->email,

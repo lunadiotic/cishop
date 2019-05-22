@@ -25,8 +25,8 @@
 						</div>
 						<div class="form-group">
 							<label for="">Role</label> <br>
-							<?= form_radio(['name' => 'role', 'value' => 'admin', 'checked' => $input->is_active == 1 ? true : false]) ?> <label for="">Admin</label>
-							<?= form_radio(['name' => 'role', 'value' => 'member', 'checked' => $input->is_active == 0 ? true : false]) ?> <label for="">Member</label>
+							<?= form_radio(['name' => 'role', 'value' => 'admin', 'checked' => $input->role == 'admin' ? true : false]) ?> <label for="">Admin</label>
+							<?= form_radio(['name' => 'role', 'value' => 'member', 'checked' => $input->role == 'member' ? true : false]) ?> <label for="">Member</label>
 							<?= form_error('is_active') ?>
 						</div>
 						<div class="form-group">

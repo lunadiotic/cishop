@@ -263,34 +263,6 @@ class MY_Model extends CI_Model
 		return $this->pagination->create_links();
 	}
 
-	/**
-	 * Hashing input or password
-	 *
-	 * @param [type] $input
-	 * @return boolean
-	 */
-	public function hash($input)
-	{
-		$hash = password_hash($input, PASSWORD_DEFAULT);
-		return $hash;
-	}
-
-	/**
-	 * Verify between input password
-	 * with hashed string
-	 *
-	 * @param String $password
-	 * @param String $hash
-	 * @return void
-	 */
-	public function hashVerify($password, $hash) {
-        if (password_verify($password, $hash)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
 
 /* End of file MY_MOdel.php */

@@ -57,6 +57,7 @@ class User extends MY_Controller
 			$input = (object) $this->input->post(null, true);
 			$this->load->library('form_validation');			
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+			$input->password = hashEncrypt($input->password);
 		}
 
 		if (!empty($_FILES) && $_FILES['photo']['name'] !== '') {
@@ -85,6 +86,73 @@ class User extends MY_Controller
 		}
 
 		redirect('user');
+	}
+
+	public function edit($id = null)
+	{
+		$data['content'] = $this->user->where('id', $id)->first();
+
+		if (!$data['content']) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect('user');
+		}
+
+		if (!$_POST) {
+			$data['input']	= (object) $data['content'];
+		} else {
+			$data['input']	= (object) $this->input->post(null, true);
+			if ($data['input']->password !== '') {
+				$data['input']->password = hashEncrypt($data['input']->password);
+			} else {
+				$data['input']->password = $data['content']->password;
+			}
+		}
+
+		if (!empty($_FILES) && $_FILES['photo']['name'] !== '') {
+			$imageName	= url_title($data['input']->name, '-', true).'-'.date('YmdHis');
+			$upload		= $this->user->uploadImage('photo', $imageName);
+			if ($upload) {
+				if ($data['content']->photo !== '') {
+					$this->user->deleteImage($data['content']->photo);
+				}
+				$data['input']->photo = $upload['file_name'];
+			} else {
+				redirect("user/edit/{$id}");
+			}
+		}
+
+		if (!$this->user->validate()) {
+			$data['title']			= 'Edit Pengguna';
+			$data['form_action']	= "user/edit/{$id}";
+			$data['page']			= 'pages/user/form';
+			$this->view($data);
+			return;
+		}
+
+		if ($this->user->where('id', $id)->update($data['input'])) {
+			$this->session->set_flashdata('success', 'Data berhasil diperbaharui');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect('user');
+	}
+
+	public function unique_email()
+	{
+		$email	= $this->input->post('email');
+		$id		= $this->input->post('id');
+		$user	= $this->user->where('email', $email)->first();
+
+		if ($user) {
+			if ($id == $user->id) {
+				return true;
+			}
+			$this->form_validation->set_message('unique_email', '%s already exists!');
+			return false;
+		}
+
+		return true;
 	}
 }
 

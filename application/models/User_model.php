@@ -30,10 +30,7 @@ class User_model extends MY_Model
 			[
 				'field' => 'email',
 				'label' => 'E-Mail',
-				'rules' => 'trim|required|valid_email|is_unique[user.email]',
-				'errors' => [
-					'is_unique' => 'This %s already exists.'
-				]
+				'rules' => 'trim|required|valid_email|callback_unique_email'
 			],
 			[
 				'field'	=> 'role',
