@@ -61,6 +61,7 @@ class Register_model extends MY_Model
 		
 		$user			= $this->create($data);
 		$sess_data = [
+			'id'		=> $user,
 			'name'		=> $data['name'],
 			'email'		=> $data['email'],
 			'role'		=> $data['role'],

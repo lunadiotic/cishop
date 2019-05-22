@@ -41,6 +41,7 @@ class Login_model extends MY_Model
 
 		if (!empty($user) && hashEncryptVerify($input->password, $user->password)) {
 			$data = [
+				'id'		=> $user->id,
 				'name'		=> $user->name,
 				'email'		=> $user->email,
 				'role'		=> $user->role,
