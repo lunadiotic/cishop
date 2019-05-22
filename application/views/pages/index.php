@@ -16,17 +16,17 @@
 			</div>
 
 			<div class="row">
+				<?php foreach($content as $row) : ?>
 				<div class="col-md-6">
 					<div class="card mb-3">
-						<img class="card-img-top" src="https://placehold.co/100x70" alt="Card image cap">
+						<img class="card-img-top img-fluid" src="<?= $row->image ? base_url("/images/product/$row->image") : base_url('/images/product/default.png') ?>" alt="Card image cap">
 						<div class="card-body">
-							<h5 class="card-title">Product title</h5>
-							<p class="card-text"><strong>Rp100.000,-</strong></p>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							<a href="#" class="badge badge-primary"><i class="fas fa-tags"></i> Category</a>
+							<h5 class="card-title"><?= $row->title ?></h5>
+							<p class="card-text"><strong>Rp<?= number_format($row->price, 0, ',', '.') ?>,-</strong></p>
+							<p class="card-text"><?= $row->description ?></p>
+							<a href="#" class="badge badge-primary"><i class="fas fa-tags"></i> <?= $row->category_title ?></a>
 						</div>
 						<div class="card-footer text-muted">
-							<!-- <a href="#" class="btn btn-sm btn-primary float-right">Order</a> -->
 							<div class="input-group">
 								<input type="number" class="form-control" >
 								<div class="input-group-append">
@@ -36,36 +36,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="card mb-3">
-						<img class="card-img-top" src="https://placehold.co/100x70" alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">Product title</h5>
-							<p class="card-text"><strong>Rp100.000,-</strong></p>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							<a href="#" class="badge badge-primary"><i class="fas fa-tags"></i> Category</a>
-						</div>
-						<div class="card-footer text-muted">
-							<!-- <a href="#" class="btn btn-sm btn-primary float-right">Order</a> -->
-							<div class="input-group">
-								<input type="number" class="form-control" >
-								<div class="input-group-append">
-									<button class="btn btn-primary" type="button" id="button-addon2">Add to Cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php endforeach;?>
 			</div>
 
 			<nav aria-label="Page navigation example">
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				</ul>
+				<?= $pagination ?>
 			</nav>
 
 		</div>

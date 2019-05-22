@@ -5,9 +5,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends MY_Controller
 {
 
-	public function index()
+	public function index($page = null)
 	{
 		$data['title']	= 'Index';
+		$data['content']	= $this->home->select(
+			['product.id', 'product.title', 'product.description', 'product.image', 'product.price', 'product.is_available', 'category.title AS category_title']
+		)->where('product.is_available', 1)->join('category')->paginate($page)->get();
+		$data['total_rows']	= $this->home->select(
+			['product.id', 'product.title', 'product.description', 'product.image', 'product.price', 'product.is_available', 'category.title AS category_title']
+		)->where('product.is_available', 1)->join('category')->count();
+		$data['pagination']	= $this->home->makePagination(site_url('home'), 2, $data['total_rows']);
 		$data['page']	= 'pages/index';
 		$this->view($data);
 	}
