@@ -16,6 +16,13 @@
 		return $options	= ['' => '- Select -'];
 	}
 
+	function getCategories()
+	{
+		$CI =& get_instance();
+		$query = $CI->db->get('category')->result();
+		return $query;
+	}
+
 	/**
 	 * Hashing input or password
 	 *
