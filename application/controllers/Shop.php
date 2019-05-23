@@ -20,7 +20,7 @@ class Shop extends MY_Controller
 
 	public function category($category, $page = null)
 	{
-		$data['title']	= 'Index';
+		$data['title']	= 'Shop';
 		$data['content']	= $this->shop->select(
 			['product.id', 'product.title', 'product.description', 'product.image', 'product.price', 'product.is_available', 'category.title AS category_title', 'category.slug AS category_slug']
 		)->where('product.is_available', 1)->where('category.slug', $category)->join('category')->paginate($page)->get();
@@ -28,6 +28,7 @@ class Shop extends MY_Controller
 			['product.id', 'product.title', 'product.description', 'product.image', 'product.price', 'product.is_available', 'category.title AS category_title', 'category.slug AS category_slug']
 		)->where('product.is_available', 1)->where('category.slug', $category)->join('category')->count();
 		$data['pagination']	= $this->shop->makePagination(site_url("shop/sortby/$category"), 4, $data['total_rows']);
+		$data['category'] = ucwords(str_replace('-', ' ', $category));
 		$data['page']	= 'pages/index';
 		$this->view($data);
 	}

@@ -7,7 +7,7 @@ class Home extends MY_Controller
 
 	public function index($page = null)
 	{
-		$data['title']	= 'Index';
+		$data['title']	= 'Home';
 		$data['content']	= $this->home->select(
 			['product.id', 'product.title', 'product.description', 'product.image', 'product.price', 'product.is_available', 'category.title AS category_title']
 		)->where('product.is_available', 1)->join('category')->paginate($page)->get();
