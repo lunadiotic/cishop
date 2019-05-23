@@ -52,12 +52,14 @@
 							Pencarian
 						</div>
 						<div class="card-body">
+							<?= form_open('/shop/search', ['method' => 'POST']) ?>
 							<div class="input-group">
-								<input type="text" class="form-control" >
+							<?= form_input('keyword', $this->session->userdata('keyword'), ['placeholder' => 'Search', 'class' => 'form-control text-center']) ?>
 								<div class="input-group-append">
-									<button class="btn btn-primary" type="button" id="button-addon2">Cari</button>
+									<button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
 								</div>
 							</div>
+							<?= form_close() ?>
 						</div>
 					</div>
 				</div>
