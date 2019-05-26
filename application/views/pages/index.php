@@ -27,12 +27,16 @@
 							<a href="#" class="badge badge-primary"><i class="fas fa-tags"></i> <?= $row->category_title ?></a>
 						</div>
 						<div class="card-footer text-muted">
-							<div class="input-group">
-								<input type="number" class="form-control" >
-								<div class="input-group-append">
-									<button class="btn btn-primary" type="button" id="button-addon2">Add to Cart</button>
+							<?= form_open('cart/add', ['method' => 'POST']) ?>
+								<?= form_hidden('id_product', $row->id) ?>
+								<?= form_hidden('price', $row->price) ?>
+								<div class="input-group">
+									<?= form_input(['name' => 'qty', 'value' => 1, 'type' => 'number', 'class' => 'form-control']) ?>
+									<div class="input-group-append">
+										<button class="btn btn-primary" type="submit" id="button-addon2">Add to Cart</button>
+									</div>
 								</div>
-							</div>
+							<?= form_close() ?>
 						</div>
 					</div>
 				</div>
