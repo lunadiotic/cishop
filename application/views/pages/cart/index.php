@@ -1,6 +1,7 @@
 <main class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<?php $this->load->view('layouts/_alert'); ?>
 			<div class="card mb-3">
 				<div class="card-header">
 					Cart
@@ -26,8 +27,9 @@
 								<td class="text-center">
 									<form action="<?= base_url("/cart/update/$row->id") ?>" method="POST">
 										<input type="hidden" name="id" value="<?= $row->id ?>">
+										<input type="hidden" name="price" value="<?= $row->price ?>">
 										<div class="input-group">
-											<input type="number" class="form-control text-center" value="<?= $row->qty ?>">
+											<input type="number" name="qty" class="form-control text-center" value="<?= $row->qty ?>">
 											<div class="input-group-append">
 												<button class="btn btn-info" type="submit"><i class="fas fa-check"></i></button>
 											</div>

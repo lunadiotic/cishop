@@ -22,9 +22,11 @@ class Cart extends MY_Controller
 	{
 		$data['title']		= 'Cart';
 		$data['content']	= $this->cart->select([
-			'cart.id', 'cart.qty', 'cart.subtotal', 'product.id', 'product.title', 'product.image', 'product.price'
+			'cart.id', 'cart.qty', 'cart.subtotal' , 'product.title', 'product.image', 'product.price'
 		])->join('product')->get();
 		$data['page']		= 'pages/cart/index';
+
+		var_dump($data['content']);
 		$this->view($data);
 	}
 	
@@ -51,6 +53,34 @@ class Cart extends MY_Controller
 		}
 
 		redirect(base_url('/'));
+	}
+
+	public function update($id = null)
+	{
+		if (!$_POST || $this->input->post('qty') <= 0) {
+			redirect(base_url('/cart/index'));
+		}
+
+		$data['content'] = $this->cart->where('id', $id)->first();
+
+		if (!$data['content']) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect(base_url('/cart/index'));
+		}
+
+		$data['input']	= (object) $this->input->post(null, true);
+		$cart			= [
+			'qty'		=> $data['input']->qty,
+			'subtotal'	=> $data['input']->price * $data['input']->qty
+		];
+
+		if ($this->cart->where('id', $id)->update($cart)) {
+			$this->session->set_flashdata('success', 'Data sudah berhasil diubah!');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect(base_url('/cart/index'));
 	}
 
 }
