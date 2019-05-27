@@ -1,19 +1,7 @@
 <main class="container">
 	<div class="row">
 		<div class="col-md-3">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card mb-3">
-						<div class="card-header">
-							Menu
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item"><a href="/profile.html">Profile</a></li>
-							<li class="list-group-item"><a href="/orders.html">Orders</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			<?php $this->load->view('layouts/_sidebar'); ?>
 		</div>
 		<div class="col-md-9">
 			<?php $this->load->view('layouts/_alert'); ?>                
