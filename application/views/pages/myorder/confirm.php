@@ -12,7 +12,7 @@
 					</div>
 				</div>
 				<?= form_open_multipart($form_action, ['method' => 'POST']) ?>
-					<?= form_hidden('id_order', $order->id) ?>
+					<?= form_hidden('id_orders', $order->id) ?>
 					<div class="card-body">
 						<div class="form-group">
 							<label for="">Invoice</label>

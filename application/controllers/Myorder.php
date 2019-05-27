@@ -44,6 +44,11 @@ class Myorder extends MY_Controller
 								->where('orders_detail.id_orders', $data['order']->id)
 								->get('orders_detail')
 								->result();
+		
+		if ($data['order']->status != 'waiting') {
+			$this->myorder->table = 'orders_confirm';
+			$data['order_confirm'] = $this->myorder->where('id_orders', $data['order']->id)->first();
+		}
 
 		$data['page']	= 'pages/myorder/detail';
 		$this->view($data);
@@ -93,7 +98,7 @@ class Myorder extends MY_Controller
 
 		if ($this->myorder->create($data['input'])) {
 			$this->myorder->table = 'orders';
-			$this->myorder->where('id', $data['input']->id_order)->update(['status' => 'paid']);
+			$this->myorder->where('id', $data['input']->id_orders)->update(['status' => 'paid']);
 			$this->session->set_flashdata('success', 'Data sudah berhasil disimpan!');
 		} else {
 			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
