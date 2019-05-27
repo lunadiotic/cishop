@@ -4,6 +4,7 @@
 			<?php $this->load->view('layouts/_sidebar') ?>
 		</div>
 		<div class="col-md-9">
+			<?php $this->load->view('layouts/_alert') ?>
 			<div class="card">
 				<div class="card-header">
 					Detail Order #01234123
@@ -12,6 +13,7 @@
 					</div>
 				</div>
 				<div class="card-body">
+					<p>Tanggal: <?= str_replace('-', '/', date("d-m-Y", strtotime($order->date))) ?></p>
 					<p>Nama: <?= $order->name ?></p>
 					<p>Telepon: <?= $order->phone ?></p>
 					<p>Alamat: <?= $order->address ?></p>
@@ -43,7 +45,9 @@
 					</table>
 				</div>
 				<div class="card-footer">
-					<a href="/orders-confirm.html" class="btn btn-success">Konfirmasi Pembayaran</a>
+					<?php if ($order->status == 'waiting'): ?>
+						<a href="<?= base_url("/myorder/confirm/$order->invoice") ?>" class="btn btn-success">Konfirmasi Pembayaran</a>
+					<?php endif ?>
 				</div>
 			</div>
 		</div>

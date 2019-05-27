@@ -25,7 +25,7 @@
 									<?php foreach($content as $row): ?>
 										<tr>
 											<th><a href="<?= base_url("/myorder/detail/$row->invoice") ?>">#<?= $row->invoice ?></a></th>
-											<td><?= $row->date ?></td>
+											<td><?= str_replace('-', '/', date("d-m-Y", strtotime($row->date))) ?></td>
 											<th>Rp<?= number_format($row->total, 0 ,',','.') ?>,-</th>
 											<td><?php $this->load->view('layouts/_status', ['status' => $row->status]) ?></td>
 										</tr>

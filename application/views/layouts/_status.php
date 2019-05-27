@@ -10,11 +10,6 @@
 		$status			= 'Dibayar';
 	}
 
-	if ($status == 'confirm') {
-		$badge_status	= 'badge-info';
-		$status			= 'Diproses';
-	}
-
 	if ($status == 'delivered') {
 		$badge_status	= 'badge-success';
 		$status			= 'Dikirim';

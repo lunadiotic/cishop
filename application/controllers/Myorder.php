@@ -49,6 +49,68 @@ class Myorder extends MY_Controller
 		$this->view($data);
 	}
 
+	public function confirm($invoice = null)
+	{
+		$data['order']	= $this->myorder->where('invoice', $invoice)->first();
+
+		if (!$data['order']) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect(base_url('/myorder'));
+		}
+
+		if ($data['order']->status !== 'waiting') {
+			$this->session->set_flashdata('warning', 'Bukti transfer sudah dikirim!');
+			redirect("myorder/confirm/{$invoice}");
+		}
+
+		if (!$_POST) {
+			$data['input']			= (object) $this->myorder->getDefaultValues();
+			$data['input']->invoice	= $invoice;
+		} else {
+			$data['input']	= (object) $this->input->post(null, true);
+		}
+
+		if (!empty($_FILES) && $_FILES['image']['name'] !== '') {
+			$imageName	= url_title($invoice, '-', true).'-'.date('YmdHis');
+			$upload		= $this->myorder->uploadImage('image', $imageName);
+			if ($upload) {
+				$data['input']->image = $upload['file_name'];
+			} else {
+				redirect("myorder/confirm/{$invoice}");
+			}
+		}
+
+		if (!$this->myorder->validate()) {
+			$data['title']			= 'Edit Product';
+			$data['form_action']	= "myorder/confirm/{$invoice}";
+			$data['page']			= 'pages/myorder/confirm';
+			$this->view($data);
+			return;
+		}
+
+		$this->myorder->table = 'orders_confirm';
+		unset($data['input']->invoice);
+
+		if ($this->myorder->create($data['input'])) {
+			$this->myorder->table = 'orders';
+			$this->myorder->where('id', $data['input']->id_order)->update(['status' => 'paid']);
+			$this->session->set_flashdata('success', 'Data sudah berhasil disimpan!');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect("myorder/detail/{$invoice}");
+	}
+
+	public function image_required()
+	{
+		if (empty($_FILES) || $_FILES['image']['name'] === '') {
+			$this->session->set_flashdata('image_error', 'Bukti transfer tidak boleh kosong!');
+			return false;
+		}
+		return true;
+	}
+
 }
 
 /* End of file ProfileOrder.php */
