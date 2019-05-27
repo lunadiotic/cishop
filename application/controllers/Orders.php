@@ -70,6 +70,12 @@ class Orders extends MY_Controller
 									->where('orders_detail.id_orders', $data['order']->id)
 									->join('product')
 									->get();
+
+			if ($data['order']->status != 'waiting') {
+				$this->orders->table = 'orders_confirm';
+				$data['order_confirm'] = $this->orders->where('id_orders', $data['order']->id)->first();
+			}
+
 			$data['form_action']	= "orders/detail/{$id}";
 			$data['page']	= 'pages/orders/detail';
 			$this->view($data);

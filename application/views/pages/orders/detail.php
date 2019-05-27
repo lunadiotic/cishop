@@ -62,24 +62,27 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mb-3">
-				<div class="col-md-8">
-					<div class="card">
-						<div class="card-header">
-							Bukti Transfer
-						</div>
-						<div class="card-body">
-							<p>Transaksi: #012345123</p>
-							<p>Dari Rekening: IDStack</p>
-							<p>Nominal: Rp900.000,-</p>
-							<p>Catatan: -</p>
+
+			<?php if(isset($order_confirm)): ?>
+				<div class="row">
+					<div class="col-md-8">	
+						<div class="card">
+							<div class="card-header">
+								Bukti Transfer
+							</div>
+							<div class="card-body">
+								<p>Dari No. Rekening: <?= $order_confirm->account_number ?></p>
+								<p>Atas Nama: <?= $order_confirm->account_name ?></p>
+								<p>Nominal: Rp<?= number_format($order_confirm->nominal, 0 ,',','.') ?>,-</p>
+								<p>Catatan: <?= $order_confirm->note ?></p>
+							</div>
 						</div>
 					</div>
+					<div class="col-md-4">
+							<img src="<?= base_url("/images/confirm/$order_confirm->image") ?>" alt="" height="200">
+					</div>
 				</div>
-				<div class="col-md-4">
-						<img src="https://placehold.co/150x200" alt="">
-				</div>
-			</div>
+			<?php endif ?>
 		</div>
 	</div>
 </main>
