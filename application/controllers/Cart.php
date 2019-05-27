@@ -17,6 +17,16 @@ class Cart extends MY_Controller
 			return;
 		}
 	}
+
+	public function index()
+	{
+		$data['title']		= 'Cart';
+		$data['content']	= $this->cart->select([
+			'cart.id', 'cart.qty', 'cart.subtotal', 'product.id', 'product.title', 'product.image', 'product.price'
+		])->join('product')->get();
+		$data['page']		= 'pages/cart/index';
+		$this->view($data);
+	}
 	
 
 	public function add()
