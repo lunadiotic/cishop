@@ -7,22 +7,24 @@
 					Alamat Pengiriman
 				</div>
 				<div class="card-body">
-					<form action="">
+					<?= form_open('/checkout/done') ?>
 						<div class="form-group">
 							<label for="">Nama</label>
-							<input type="text" class="form-control">
-							<small id="" class="form-text text-danger">Nama harus diisi.</small>
+							<?= form_input('name', $input->name, ['class' => 'form-control', 'placeholder' => 'Masukkan nama penerima']) ?>
+							<?= form_error('name') ?>
 						</div>
 						<div class="form-group">
 							<label for="">Alamat</label>
-							<textarea name="" id="" cols="30" rows="6" class="form-control"></textarea>
+							<?= form_textarea(['name' => 'address', 'value' => $input->address, 'rows' => 4, 'class' => 'form-control']) ?>
+							<?= form_error('address') ?>	
 						</div>
 						<div class="form-group">
 							<label for="">Telepon</label>
-							<input type="text" class="form-control">
+							<?= form_input('phone', $input->phone, ['class' => 'form-control', 'placeholder' => 'Masukkan nomor telepon penerima']) ?>
+							<?= form_error('phone') ?>
 						</div>
 						<button type="submit" class="btn btn-primary">Checkout</button>
-					</form>
+					<?= form_close() ?>
 				</div>
 			</div>
 		</div>
