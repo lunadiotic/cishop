@@ -7,7 +7,7 @@
 			<?php $this->load->view('layouts/_alert') ?>
 			<div class="card mb-3">
 				<div class="card-header">
-					Detail Order #01234123
+					Detail Order #<?= $order->invoice ?>
 					<div class="float-right">
 						<?php $this->load->view('layouts/_status', ['status' => $order->status]) ?>
 					</div>
