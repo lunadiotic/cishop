@@ -25,8 +25,7 @@ class Cart extends MY_Controller
 			'cart.id', 'cart.qty', 'cart.subtotal' , 'product.title', 'product.image', 'product.price'
 		])->join('product')->get();
 		$data['page']		= 'pages/cart/index';
-
-		var_dump($data['content']);
+		
 		$this->view($data);
 	}
 	
@@ -76,6 +75,28 @@ class Cart extends MY_Controller
 
 		if ($this->cart->where('id', $id)->update($cart)) {
 			$this->session->set_flashdata('success', 'Data sudah berhasil diubah!');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect(base_url('/cart/index'));
+	}
+
+	public function delete($id = null)
+	{
+		if (!$_POST) {
+			redirect(base_url('/cart/index'));
+		}
+
+		$content = $this->cart->where('id', $id)->first();
+
+		if (!$content) {
+			$this->session->set_flashdata('warning', 'Data tidak ditemukan!');
+			redirect('category');
+		}
+
+		if ($this->cart->where('id', $id)->delete()) {
+			$this->session->set_flashdata('success', 'Data sudah berhasil dihapus!');
 		} else {
 			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
 		}

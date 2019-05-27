@@ -40,7 +40,7 @@
 								<td class="text-center">
 									<form action="<?= base_url("/cart/delete/$row->id") ?>" method="POST">
 										<input type="hidden" name="id" value="<?= $row->id ?>">
-										<button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+										<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash-alt"></i></button>
 									</form>
 								</td>
 							</tr>
@@ -58,7 +58,7 @@
 				</div>
 				<div class="card-footer">
 					<a href="/checkout.html" class="btn btn-success float-right">Pembayaran <i class="fas fa-angle-right"></i></a>
-					<a href="/index.html" class="btn btn-warning text-white"><i class="fas fa-angle-left"></i> Belanja Lagi</a>
+					<a href="<?= base_url('/') ?>" class="btn btn-warning text-white"><i class="fas fa-angle-left"></i> Belanja Lagi</a>
 				</div>
 			</div>
 		</div>
