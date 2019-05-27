@@ -44,7 +44,7 @@
 							</table>
 						</div>
 						<div class="card-footer">
-							<form action="<?= $form_action ?>">
+							<form action="<?= base_url($form_action) ?>" method="POST">
 								<input type="hidden" name="id" value="<?= $order->id ?>">
 								<div class="input-group">
 									<select name="status" class="form-control">

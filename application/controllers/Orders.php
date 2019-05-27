@@ -59,31 +59,41 @@ class Orders extends MY_Controller
 			redirect(base_url('/orders'));
 		}
 
-		if (!$_POST) {
-			$data['title']	= 'Order Detail';
-			$this->orders->table = 'orders_detail';
-			$data['order_detail'] = $this->orders->select([
-										'orders_detail.id_orders', 'orders_detail.id_product', 
-										'orders_detail.qty', 'orders_detail.subtotal' , 
-										'product.title', 'product.image', 'product.price'
-									])
-									->where('orders_detail.id_orders', $data['order']->id)
-									->join('product')
-									->get();
+		$data['title']	= 'Order Detail';
+		$this->orders->table = 'orders_detail';
+		$data['order_detail'] = $this->orders->select([
+									'orders_detail.id_orders', 'orders_detail.id_product', 
+									'orders_detail.qty', 'orders_detail.subtotal' , 
+									'product.title', 'product.image', 'product.price'
+								])
+								->where('orders_detail.id_orders', $data['order']->id)
+								->join('product')
+								->get();
 
-			if ($data['order']->status != 'waiting') {
-				$this->orders->table = 'orders_confirm';
-				$data['order_confirm'] = $this->orders->where('id_orders', $data['order']->id)->first();
-			}
-
-			$data['form_action']	= "orders/detail/{$id}";
-			$data['page']	= 'pages/orders/detail';
-			$this->view($data);
-		} else {
-			$data['input']	= (object) $this->input->post(null, true);
+		if ($data['order']->status != 'waiting') {
+			$this->orders->table = 'orders_confirm';
+			$data['order_confirm'] = $this->orders->where('id_orders', $data['order']->id)->first();
 		}
 
+		$data['form_action']	= "orders/update/{$id}";
+		$data['page']			= 'pages/orders/detail';
+		$this->view($data);		
+	}
 
+	public function update($id = null)
+	{
+		if (!$_POST) {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+			redirect(base_url("orders/detail/$id"));
+		}
+		
+		if ($this->orders->where('id', $id)->update(['status' => $this->input->post('status')])) {
+			$this->session->set_flashdata('success', 'Data berhasil diperbaharui');
+		} else {
+			$this->session->set_flashdata('error', 'Oops! Terjadi Kesalahan!');
+		}
+
+		redirect(base_url("orders/detail/$id"));
 	}
 
 }
