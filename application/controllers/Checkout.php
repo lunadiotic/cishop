@@ -58,7 +58,17 @@ class Checkout extends MY_Controller
 
 		// var_dump($data);
 
-		if ($this->checkout->create($data)) {
+		if ($order = $this->checkout->create($data)) {
+			
+			$order_detail = $this->db->where('id_user', $this->id_user)->get('cart')->result_array();
+			foreach ($order_detail as $row) {
+				$row['id_orders']	= $order;
+				unset($row['id'], $row['id_user']);
+				$this->db->insert('orders_detail', $row);
+			}
+
+			$this->db->delete('cart', ['id_user' => $this->id_user]);
+
 			$this->session->set_flashdata('success', 'Data sudah berhasil disimpan!');
 			$data['title']		= 'Checkout Berhasil';
 			$data['page']		= 'pages/checkout/success';
